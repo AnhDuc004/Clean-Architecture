@@ -7,6 +7,7 @@ use App\Application\UseCases\Auth\RefreshTokenUseCase;
 use App\Application\UseCases\Auth\RegisterUserUseCase;
 use App\Interfaces\Http\Requests\LoginRequest;
 use App\Interfaces\Http\Requests\RegisterRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 
 class AuthController
@@ -46,7 +47,7 @@ class AuthController
 
     public function refreshToken(Request $request)
     {
-        $user = $request->user(); 
+        $user = $request->user();
         if (!$user) {
             return response()->json(['message' => 'Unauthenticated.'], 401);
         }

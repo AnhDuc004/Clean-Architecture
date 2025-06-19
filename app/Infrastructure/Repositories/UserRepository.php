@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Infrastructure\Repositories;
 
@@ -15,6 +15,9 @@ class UserRepository implements UserRepositoryInterface
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail) {
+            $user->sendEmailVerificationNotification();
+        }
         return new DomainUser($user->id, $user->name, $user->email);
     }
 
